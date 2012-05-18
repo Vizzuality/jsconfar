@@ -97,7 +97,7 @@
     }
 
     function switchlayervisibility(o,l,txt){
-      if (l.layer.options.opacity == 0){
+      if (!l.isVisible()){
         o.innerHTML = 'Hide '+ txt;
         //o.style.backgroundColor = '#3582BE';
         l.show();

@@ -11,7 +11,7 @@
   <link href="css/style.css" media="screen" rel="stylesheet" type="text/css" />
   <script src="http://code.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
   <script type="text/javascript" src="js/wax.leaf.min-6.0.0-beta2.js"></script>
-  <script type="text/javascript" src="dist/cartodb-leaflet-min.js"></script>
+  <script type="text/javascript" src="dist/cartodb-leaflet.js"></script>
   <script type="text/javascript" src="dist/cartodb-popup-min.js"></script>
 
   <script type="text/javascript">
@@ -60,15 +60,17 @@
     }
 
     function switchTohexagons(o,l,txt){
+      var q, s;
       if (hex){
-        l.show();
+        s = "#github_javascript{ marker-fill:#333333; marker-width:5; marker-opacity:.75; marker-line-width:0; marker-placement:point; marker-type:ellipse; marker-allow-overlap:true; }"
+        q="SELECT * FROM {{table_name}}";
       }else{
-        var style="#github_javascript{[prop_count>0]{polygon-fill:#313695;}[prop_count>1]{polygon-fill:#4575B4;}[prop_count>2]{polygon-fill:#74ADD1;}[prop_count>4]{polygon-fill:#ABD9E9;}[prop_count>8]{polygon-fill:#E0F3F8;}[prop_count>16]{polygon-fill:#FFFFBF;}[prop_count>32]{polygon-fill:#FEE090;}[prop_count>64]{polygon-fill:#FDAE61;}[prop_count>128]{polygon-fill:#F46D43;}[prop_count>256]{polygon-fill:#D73027;}[prop_count>512]{polygon-fill:#A50026;}polygon-opacity:0.71;line-width:0;}";
-        var query="WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 2),CDB_XYZ_Resolution({z}) * 2 ) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell";
-        l.setQuery(query);
-        l.setStyle(style);
+        s="#github_javascript{[prop_count>0]{polygon-fill:#313695;}[prop_count>1]{polygon-fill:#4575B4;}[prop_count>2]{polygon-fill:#74ADD1;}[prop_count>4]{polygon-fill:#ABD9E9;}[prop_count>8]{polygon-fill:#E0F3F8;}[prop_count>16]{polygon-fill:#FFFFBF;}[prop_count>32]{polygon-fill:#FEE090;}[prop_count>64]{polygon-fill:#FDAE61;}[prop_count>128]{polygon-fill:#F46D43;}[prop_count>256]{polygon-fill:#D73027;}[prop_count>512]{polygon-fill:#A50026;}polygon-opacity:0.71;line-width:0;}";
+        q="WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 15),CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell";
       }
       hex = !hex;
+      l.setQuery(q);
+      l.setStyle(s);
     }
 
   </script>
