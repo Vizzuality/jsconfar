@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  <title>Using CartoDB for jsconf.com.ar</title>
+  <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+  <link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.ie.css" /><![endif]-->
+  <link  href="css/cartodb-leaflet.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://code.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
+  <script type="text/javascript" src="js/wax.leaf.min-6.0.0-beta2.js"></script>
+  <script type="text/javascript" src="dist/cartodb-leaflet-min.js"></script>
+  <script type="text/javascript" src="dist/cartodb-popup-min.js"></script>
+
+  <script type="text/javascript">
+
+    var map;
+    var jsdevs;
+
+    function initialize() {
+
+      wax.tilejson('http://a.tiles.mapbox.com/v3/saleiva.map-mcd2cpj9.jsonp',
+      function(tilejson) {
+        map = new L.Map('map');
+        map.addLayer(new wax.leaf.connector(tilejson))
+        map.setView(new L.LatLng(51.505, -0.09), 4);
+
+        wax.leaf.interaction().map(map).tilejson(tilejson);
+
+        // Add a cartodb layer with the js developers
+        jsdevs = new L.CartoDBLayer({
+          map: map,
+          user_name:'saleiva',
+          table_name: 'github_javascript',
+          query: "SELECT * FROM {{table_name}}",
+          auto_bound: false,
+          debug: true,
+          interactivity: 'cartodb_id, username',
+          featureMouseClick: handleMarkerClick,
+          featureMouseOver: handleMarkerOver,
+          featureMouseOut: handleMarkerOut
+        });
+        map.addLayer(jsdevs);
+
+      });
+
+      function handleMarkerClick(ll,d){
+        console.log(d.username);
+      }
+      function handleMarkerOver(){
+        document.body.style.cursor = "pointer";
+      }
+      function handleMarkerOut(ll,d){
+        document.body.style.cursor = "default";
+      }
+    }
+
+    function filterLayer(o,l,f){
+    	if(f != undefined){
+    		q = "WHERE hireable = '" + f+ "'";
+    		c = (f=='t') ? "#66CC33" : "#E95850";
+    	}else{
+    		q = "";
+    		c = "#333"
+    	}
+   		l.setQuery("SELECT * FROM {{table_name}} " + q);
+   		l.setStyle("#github_javascript{ marker-fill:"+c+"; marker-width:5; marker-opacity:.75; marker-line-width:0; marker-placement:point; marker-type:ellipse; marker-allow-overlap:true; }")
+    }
+
+  </script>
+</head>
+<body onload="initialize()">
+  <div id="map"></div>
+  <div id="overlay">
+    <div class="header">
+      <h1>github developers map</h1>
+    </div>
+    <div class="tools">
+      <ul>
+      	<li><a class="first" href="#" onclick="filterLayer(this,jsdevs)">All</a></li>
+      	<li><a href="#" onclick="filterLayer(this,jsdevs,'t')">Yes</a></li>
+      	<li><a class="last" href="#" onclick="filterLayer(this,jsdevs,'f')">No</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
+
+
