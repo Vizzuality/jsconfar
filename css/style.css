@@ -15,3 +15,20 @@ div.tools ul li{ margin: 0; padding: 0; list-style: none; display: inline-block;
 div.tools ul li a.first{border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px; -webkit-border-top-left-radius: 2px; -webkit-border-bottom-left-radius: 2px; -moz-border-radius-topleft: 2px; -moz-border-radius-bottomleft: 2px; border-top-left-radius: 2px; border-bottom-left-radius: 2px; width: 76px;}
 div.tools ul li a{ border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px; width: 79px;}
 div.tools ul li a.last{ border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px; -webkit-border-top-right-radius: 2px; -webkit-border-bottom-right-radius: 2px; -moz-border-radius-topright: 2px; -moz-border-radius-bottomright: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; width: 76px; margin: 0;}
+div.tools ul li a.selected {background:#3582BE;}
+
+/*Slider*/
+.ui-slider { position: relative; margin:15px 0 0 0; text-align: left; background:#74B6DC; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
+.ui-slider .ui-slider-handle { position: absolute; z-index: 2; padding:0; width: 1em; height: 1em; cursor: default; background:#3582BE; border:3px solid white; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
+.ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
+.ui-slider-horizontal { height: 8px; }
+.ui-slider-horizontal .ui-slider-handle { top: -.45em; margin-left: -.6em; }
+.ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
+.ui-slider-horizontal .ui-slider-range-min { left: 0; }
+.ui-slider-horizontal .ui-slider-range-max { right: 0; }
+
+.ui-slider-vertical { width: .8em; height: 20px; }
+.ui-slider-vertical .ui-slider-handle { left: -.3em; margin-left: 0; margin-bottom: -.6em; }
+.ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
+.ui-slider-vertical .ui-slider-range-min { bottom: 0; }
+.ui-slider-vertical .ui-slider-range-max { top: 0; }
