@@ -8,6 +8,7 @@ h1{font-family: Helvetica, Arial, sans-serif; font-size: 21px; color: #333; text
 div.tools{padding: 20px;}
 div.tools a{background-color: #74B6DC; border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px; padding: 12px 0px 12px 0px; text-align: center; display:block; color: #FFF; font-family: Helvetica, Arial, sans-serif; font-size: 17px; font-weight: bold; text-decoration: none;}
 div.tools a:hover{background-color: #3582BE;}
+div.tools a.margin4{margin-top:4px;}
 
 div.tools ul{ margin: 0; padding: 0; letter-spacing: -4px;}
 div.tools ul li{ margin: 0; padding: 0; list-style: none; display: inline-block; margin: 0 1px 0 0; letter-spacing: 0px;}

@@ -18,6 +18,7 @@
 
     var map;
     var jsdevs,rordevs;
+    var hex = false;
 
     function initialize() {
 
@@ -44,27 +45,6 @@
         });
         map.addLayer(jsdevs);
 
-        // Hide the jsdevs layer by default
-        jsdevs.hide()
-
-        // Add a cartodb layer with the js developers
-        rordevs = new L.CartoDBLayer({
-          map: map,
-          user_name:'saleiva',
-          table_name: 'github_ruby',
-          query: "SELECT * FROM {{table_name}}",
-          auto_bound: false,
-          debug: true,
-          interactivity: 'cartodb_id, username',
-          featureMouseClick: handleMarkerClick,
-          featureMouseOver: handleMarkerOver,
-          featureMouseOut: handleMarkerOut
-        });
-        map.addLayer(rordevs);
-
-        // Hide the rordevs layer by default
-        rordevs.hide()
-
       });
 
       function handleMarkerClick(ll,d){
@@ -79,16 +59,16 @@
 
     }
 
-    function switchlayervisibility(o,l,txt){
-      if (l.layer.options.opacity == 0){
-        o.innerHTML = 'Hide '+ txt;
-        //o.style.backgroundColor = '#3582BE';
+    function switchTohexagons(o,l,txt){
+      if (hex){
         l.show();
       }else{
-        o.innerHTML = 'Show '+ txt;
-        //o.style.backgroundColor = '#74B6DC';
-        l.hide();
+        var style="#github_javascript{[prop_count>0]{polygon-fill:#313695;}[prop_count>1]{polygon-fill:#4575B4;}[prop_count>2]{polygon-fill:#74ADD1;}[prop_count>4]{polygon-fill:#ABD9E9;}[prop_count>8]{polygon-fill:#E0F3F8;}[prop_count>16]{polygon-fill:#FFFFBF;}[prop_count>32]{polygon-fill:#FEE090;}[prop_count>64]{polygon-fill:#FDAE61;}[prop_count>128]{polygon-fill:#F46D43;}[prop_count>256]{polygon-fill:#D73027;}[prop_count>512]{polygon-fill:#A50026;}polygon-opacity:0.71;line-width:0;}";
+        var query="WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 2),CDB_XYZ_Resolution({z}) * 2 ) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell";
+        l.setQuery(query);
+        l.setStyle(style);
       }
+      hex = !hex;
     }
 
   </script>
@@ -100,8 +80,7 @@
       <h1>github developers map</h1>
     </div>
     <div class="tools">
-      <a href="#" onclick="switchlayervisibility(this,jsdevs,'js developers')">Show js developers</a>
-      <a class="margin4" href="#" onclick="switchlayervisibility(this,rordevs,'ruby developers')">Show ruby developers</a>
+      <a href="#" onclick="switchTohexagons(this,jsdevs,' hexagon grid')">Show hexagon grid</a>
     </div>
   </div>
 </body>
