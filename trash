@@ -1,0 +1,26 @@
+marker-fill:#FF6600;
+   marker-width:8;
+   marker-line-color:white;
+   marker-line-width:3;
+   marker-opacity:0.49;
+   marker-line-opacity:0.49;
+   marker-placement:point;
+   marker-type:ellipse;
+   marker-allow-overlap:true;
+
+
+      marker-file: url('/home/ubuntu/tile_assets/green_marker.png');
+   marker-allow-overlap:true;
+}
+
+
+
+query = query.replace(/%7Bx%7D/g,"{x}").replace(/%7By%7D/g,"{y}").replace(/%7Bz%7D/g,"{z}");
+
+
+
+
+
+
+http://data.buenosaires.gov.ar/dataset/bicicletas-publicas
+http://data.buenosaires.gov.ar/dataset

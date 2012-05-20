@@ -39,6 +39,14 @@
 
         wax.leaf.interaction().map(map).tilejson(tilejson);
 
+        // Add circle
+        circle = new L.Circle(here, radius, {
+          color: 'red',
+          fillColor: '#f03',
+          fillOpacity: 0
+        });
+        map.addLayer(circle);
+
         // Add a cartodb layer with the js developers
         jsdevs = new L.CartoDBLayer({
           map: map,
@@ -54,13 +62,6 @@
         });
         map.addLayer(jsdevs);
 
-        // Add circle
-        circle = new L.Circle(here, radius, {
-          color: 'red',
-          fillColor: '#f03',
-          fillOpacity: 0.5
-        });
-        map.addLayer(circle);
       });
 
       // Init slider

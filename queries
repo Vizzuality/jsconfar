@@ -1,0 +1,8 @@
+
+SELECT tm_world_borders_sim.the_geom, tm_world_borders_sim.iso3, count(github_javascript.cartodb_id) FROM tm_world_borders_sim, github_javascript WHERE ST_Intersects(tm_world_borders_sim.the_geom, github_javascript.the_geom ) GROUP BY tm_world_borders_sim.the_geom, iso3
+
+//THE ONE WITH MORE FOLLOWERS
+SELECT * FROM github_javascript WHERE followers = (SELECT max(followers) FROM github_javascript)
+
+//TOP 10 BY FOLLOWERS
+SELECT * FROM github_javascript ORDER BY followers DESC LIMIT 10

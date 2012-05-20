@@ -49,8 +49,13 @@
 
       });
 
+      // Create a CartoDB popup
+      var popup = new L.CartoDBPopup();
+
       function handleMarkerClick(ll,d){
-        console.log(d.username);
+        popup.setContent(d.username);
+        popup.setLatLng(ll);
+        map.openPopup(popup);
       }
       function handleMarkerOver(){
         document.body.style.cursor = "pointer";
@@ -58,43 +63,6 @@
       function handleMarkerOut(ll,d){
         document.body.style.cursor = "default";
       }
-
-      // // Create a CartoDB popup
-      // var popup = new L.CartoDBPopup();
-
-
-
-      // // Second cartodb layer, earthquakes
-      // var cartodb_leaflet2 = new L.CartoDBLayer({
-      //   map: map,
-      //   user_name:"examples",
-      //   table_name: 'earthquakes',
-      //   query: "SELECT cartodb_id,the_geom_webmercator,magnitude FROM {{table_name}}",
-      //   tile_style: "#{{table_name}}{marker-fill:#E25B5B}",
-      //   opacity: 0.8,
-      //   interactivity: "cartodb_id, magnitude",
-      //   featureMouseOver: function(data) {
-      //     document.body.style.cursor = "pointer";
-      //   },
-      //   featureMouseOut: function() {
-      //     document.body.style.cursor = "default";
-      //   },
-      //   featureMouseClick: function(latlng, data) {
-      //     // Set popup content
-      //     popup.setContent(data);
-
-      //     // Set latlng
-      //     popup.setLatLng(latlng);
-
-      //     // Show it!
-      //     map.openPopup(popup);
-      //   },
-      //   auto_bound: true,
-      //   debug: false
-      // });
-      // // Adding layer to map
-      // map.addLayer(cartodb_leaflet2);
-    }
 
     function switchlayervisibility(o,l,txt){
       if (!l.isVisible()){
