@@ -47,8 +47,13 @@
 
       });
 
+      // Create a CartoDB popup
+      var popup = new L.CartoDBPopup();
+
       function handleMarkerClick(ll,d){
-        console.log(d.username);
+        popup.setContent(d.username);
+        popup.setLatLng(ll);
+        map.openPopup(popup);
       }
       function handleMarkerOver(){
         document.body.style.cursor = "pointer";
